@@ -1,3 +1,5 @@
+package ui;
+
 import Ilya_S.pageObjects.HomePage;
 import Ilya_S.pageObjects.chapter_9.DownloadFilesPage;
 import org.junit.jupiter.api.Test;

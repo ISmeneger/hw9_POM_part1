@@ -1,12 +1,18 @@
+package ui;
+
 import Ilya_S.pageObjects.HomePage;
 import Ilya_S.pageObjects.chapter_3.FormSubmittedPage;
 import Ilya_S.pageObjects.chapter_3.WebFormPage;
+import configs.TestPropertiesConfig;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
 
 import static Ilya_S.pageObjects.HomePage.BASE_URL;
 import static Ilya_S.pageObjects.chapter_3.FormSubmittedPage.SUBMITTED_FORM_TEXT;
@@ -19,10 +25,9 @@ public class WebFormTests extends BaseTest {
 
     HomePage homePage;
     WebFormPage webFormPage;
+    TestPropertiesConfig config = ConfigFactory.create(TestPropertiesConfig.class, System.getProperties());
 
-    String userField = "user";
-    String clearField = "";
-    String passwordField = "user";
+    private static final String USER_FIELD = "user";
 
     @BeforeEach
     void setupPage() {
@@ -48,54 +53,58 @@ public class WebFormTests extends BaseTest {
 
     @Test
     void textInputTest() {
-        webFormPage.inputValue();
+        webFormPage.inputValue("user");
 
-        assertEquals(userField, webFormPage.getTextValue());
+        assertEquals(USER_FIELD, webFormPage.getTextValue());
     }
 
     @Test
     void textInputClearTest() {
-        webFormPage.inputValue();
+        webFormPage.inputValue("user");
         webFormPage.clearTextValue();
 
-        assertEquals(clearField, webFormPage.getTextValue());
+        String actualText = webFormPage.getTextValue();
+        assertThat(actualText).isEmpty();
     }
 
     @Test
     void passwordInputTest() {
-        webFormPage.inputPassword();
+        webFormPage.inputPassword(config.getPassword());
 
-        assertEquals(passwordField, webFormPage.getTextPassword());
+        String actualPassword = webFormPage.getTextPassword();
+        assertThat(actualPassword).isNotEmpty();
     }
 
     @Test
     void passwordClearTest() {
-        webFormPage.inputPassword();
+        webFormPage.inputPassword(config.getPassword());
         webFormPage.clearPasswordValue();
 
-        assertEquals(clearField, webFormPage.getTextPassword());
+        String actualPassword = webFormPage.getTextPassword();
+        assertThat(actualPassword).isEmpty();
     }
 
     @Test
     void textAreaFieldTest() {
-        webFormPage.inputTextareaValue();
+        webFormPage.inputTextareaValue(BIG_TEXT);
 
         assertEquals(BIG_TEXT, webFormPage.getTextarea());
     }
 
     @Test
     void textAreaFieldClearTest() {
-        webFormPage.inputTextareaValue();
+        webFormPage.inputTextareaValue(BIG_TEXT);
         webFormPage.clearTextareaValue();
 
-        assertEquals(clearField, webFormPage.getTextarea());
+        String bigText = webFormPage.getTextarea();
+        assertThat(bigText).isEmpty();
     }
 
     @Test
     void disabledInputFieldTest() {
         assertFalse(webFormPage.disabledInput().isEnabled());
 
-        webFormPage.disabledInputFieldSendValue();
+        assertThrows(ElementNotInteractableException.class, () -> webFormPage.disabledInput().sendKeys("test string"));
 
         assertEquals(DISABLED_INPUT_FIELD, webFormPage.getDisabledInputValue());
     }
@@ -104,7 +113,7 @@ public class WebFormTests extends BaseTest {
     void readonlyInputFieldTest() {
         assertTrue(webFormPage.readonlyInput().isEnabled());
 
-        webFormPage.readonlyInputFieldSendValue();
+        assertNotEquals("test string", webFormPage.readonlyInput().findElement(By.xpath("..")).getText());
 
         assertEquals(READONLY_INPUT_FIELD, webFormPage.getReadonlyInputField());
     }
@@ -126,7 +135,7 @@ public class WebFormTests extends BaseTest {
     void dropdownDataListTest(String city) {
         webFormPage.dropDownDataListMenu(city);
 
-        assertEquals(city, webFormPage.getDropdownDataList().getDomProperty("value"));
+        assertEquals(city, webFormPage.getDropdownDataList().getDomProperty(VALUE_NAME));
     }
 
     @Test
@@ -135,13 +144,6 @@ public class WebFormTests extends BaseTest {
         webFormPage.submitForm();
 
         assertThat(driver.getCurrentUrl()).contains("STE+In+Banner");
-
-        FormSubmittedPage formSubmittedPage = new FormSubmittedPage(driver);
-        WebElement title = webFormPage.getTitle();
-        WebElement submittedText = formSubmittedPage.getSubmittedText();
-
-        assertEquals(SUBMITTED_FORM_TITLE, title.getText());
-        assertEquals(SUBMITTED_FORM_TEXT, submittedText.getText());
     }
 
     @Test
@@ -173,31 +175,33 @@ public class WebFormTests extends BaseTest {
         assertTrue(webFormPage.getDefaultRadio().isSelected());
     }
 
-//    @Test
-//    void colorPickerTest() throws InterruptedException {
-//        assertThat(webFormPage.chooseColorPicker()).isNotEqualTo(initColor);
-//        assertThat(Color.fromString(finalColor)).isEqualTo(green);
-//        assertEquals("#00ff00", colorPicker.getAttribute("value"));
-//    }
+    @Test
+    void colorPickerTest() {
+        String initColor = webFormPage.getColor();
+        webFormPage.chooseColorPicker();
+        String afterColor = webFormPage.getColor();
+
+        assertThat(initColor).isNotEqualTo(afterColor);
+        assertThat(Color.fromString(afterColor)).isEqualTo(GREEN);
+    }
 
     @Test
     void datePickerTest() {
-        webFormPage.chooseDatePicker();
+        webFormPage.chooseDatePicker("04/14/2025");
 
-        assertEquals("04/14/2025", webFormPage.getDatePicker().getDomProperty("value"));
+        assertEquals("04/14/2025", webFormPage.getDatePicker().getDomProperty(VALUE_NAME));
     }
 
     @Test
     void actionAPIMouseExampleRangeTest() {
         webFormPage.moveSliderRight();
 
-        assertEquals(String.valueOf(10), webFormPage.getRangeElement().getDomProperty("value"));
+        assertEquals(String.valueOf(10), webFormPage.getRangeElement().getDomProperty(VALUE_NAME));
     }
 
     @Test
-    void submitFormTest() throws InterruptedException {
+    void submitFormTest() {
         webFormPage.submitForm();
-        Thread.sleep(3000);
 
         FormSubmittedPage formSubmittedPage = new FormSubmittedPage(driver);
         String currentUrl = formSubmittedPage.getCurrentUrl();

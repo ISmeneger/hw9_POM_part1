@@ -1,7 +1,8 @@
+package ui;
+
 import Ilya_S.pageObjects.HomePage;
 import Ilya_S.pageObjects.chapter_4.FramesPage;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import static Ilya_S.pageObjects.HomePage.BASE_URL;

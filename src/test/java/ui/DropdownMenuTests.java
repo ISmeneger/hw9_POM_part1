@@ -1,3 +1,5 @@
+package ui;
+
 import Ilya_S.pageObjects.chapter_3.DropdownMenuPage;
 import Ilya_S.pageObjects.HomePage;
 import org.junit.jupiter.api.Test;

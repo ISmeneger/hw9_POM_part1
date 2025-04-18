@@ -1,3 +1,5 @@
+package ui;
+
 import Ilya_S.pageObjects.HomePage;
 import Ilya_S.pageObjects.chapter_5.GeolocationPage;
 import org.junit.jupiter.api.Test;

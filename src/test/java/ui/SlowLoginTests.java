@@ -1,3 +1,5 @@
+package ui;
+
 import Ilya_S.pageObjects.HomePage;
 import Ilya_S.pageObjects.chapter_7.SlowLoginPage;
 import org.junit.jupiter.api.Test;
