@@ -10,9 +10,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.Color;
 
-
-import java.awt.*;
-
 import static Ilya_S.pageObjects.HomePage.BASE_URL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
