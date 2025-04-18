@@ -3,14 +3,17 @@ package Ilya_S.pageObjects.chapter_3;
 import Ilya_S.pageObjects.BasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.Color;
+
+
+import java.awt.*;
 
 import static Ilya_S.pageObjects.HomePage.BASE_URL;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WebFormPage extends BasePage {
@@ -24,8 +27,11 @@ public class WebFormPage extends BasePage {
             "Fames est ligula molestie aliquam pretium bibendum nullam, sociosqu maecenas mus etiam consequat ornare leo, sem mattis " +
             "varius luctus litora senectus. Parturient quis tristique erat natoque tortor nascetur, primis augue vivamus habitasse " +
             "senectus porta leo, aenean potenti ante a nam.";
+    public static final Color GREEN = new Color(0, 255, 0, 1);
 
     private static final String DROPDOWN_SELECT_TEXT = "Open this select menu";
+    public static final String VALUE_NAME = "value";
+
 
     String selectFile = System.getProperty("user.dir") + "/src/test/resources/STE In Banner.jpg";
 
@@ -57,45 +63,48 @@ public class WebFormPage extends BasePage {
     }
 
     @Step("Input text in user field")
-    public void inputValue() {
-        textInputField.sendKeys("user");
+    public void inputValue(String user) {
+        textInputField.sendKeys(user);
     }
 
+    @Step("Clear text in user field")
     public void clearTextValue() {
         textInputField.clear();
     }
 
     @Step("Assert value text")
     public String getTextValue() {
-        return textInputField.getDomProperty("value");
+        return textInputField.getDomProperty(VALUE_NAME);
     }
 
     @Step("Input password")
-    public void inputPassword() {
-        passwordInputField.sendKeys("user");
+    public void inputPassword(String password) {
+        passwordInputField.sendKeys(password);;
     }
 
+    @Step("Clear password")
     public void clearPasswordValue() {
         passwordInputField.clear();
     }
 
     @Step("Assert value password")
     public String getTextPassword() {
-        return passwordInputField.getDomProperty("value");
+        return passwordInputField.getDomProperty(VALUE_NAME);
     }
 
     @Step("Input big text")
-    public void inputTextareaValue() {
-        textAreaInputField.sendKeys(BIG_TEXT);
+    public void inputTextareaValue(String bigText) {
+        textAreaInputField.sendKeys(bigText);
     }
 
+    @Step("Clear big text")
     public void clearTextareaValue() {
         textAreaInputField.clear();
     }
 
     @Step("Assert value big text")
     public String getTextarea() {
-        return textAreaInputField.getDomProperty("value");
+        return textAreaInputField.getDomProperty(VALUE_NAME);
     }
 
     @Step("Check disabled field")
@@ -103,12 +112,9 @@ public class WebFormPage extends BasePage {
         return disabledInputField;
     }
 
+    @Step("Check disabled field")
     public String getDisabledInputValue() {
         return disabledInputField.getDomAttribute("placeholder");
-    }
-
-    public void disabledInputFieldSendValue() {
-        assertThrows(ElementNotInteractableException.class, () -> disabledInputField.sendKeys("test string"));
     }
 
     @Step("Check readonly field")
@@ -116,13 +122,9 @@ public class WebFormPage extends BasePage {
         return readonlyInputField;
     }
 
+    @Step("Check readonly field")
     public String getReadonlyInputField() {
-        return readonlyInputField.getDomAttribute("value");
-    }
-
-    public void readonlyInputFieldSendValue() {
-        readonlyInputField.sendKeys("test string");
-        assertNotEquals("test string", readonlyInputField.findElement(By.xpath("..")).getText());
+        return readonlyInputField.getDomAttribute(VALUE_NAME);
     }
 
     @Step("Check dropdown and choose option")
@@ -138,7 +140,7 @@ public class WebFormPage extends BasePage {
         Select select = new Select(dropdownSelectMenu);
         assertEquals(DROPDOWN_SELECT_TEXT, select.getFirstSelectedOption().getText());
         select.selectByValue(value);
-        assertEquals(value, select.getFirstSelectedOption().getDomProperty("value"));
+        assertEquals(value, select.getFirstSelectedOption().getDomProperty(VALUE_NAME));
     }
 
     public WebElement getDropdownDataList() {
@@ -186,30 +188,30 @@ public class WebFormPage extends BasePage {
         defaultRadioButton.click();
     }
 
-//    @Step("Check color picker")
-//    public IntPredicate chooseColorPicker() throws InterruptedException {
-//        JavascriptExecutor js = (JavascriptExecutor) driver;
-//        String initColor = colorPicker.getAttribute("value");
-//        System.out.println("The initial color is " + initColor);
-//
-//        Color green = new Color(0, 255, 0, 1);
-//
-//        String script = String.format("arguments[0].setAttribute('value', '%s');", green.asHex());
-//        Thread.sleep(3000);
-//        js.executeScript(script, colorPicker);
-//        String finalColor = colorPicker.getAttribute("value");
-//        System.out.println("The initial color is " + finalColor);
-//        return null;
-//    }
+    @Step("Check color picker")
+    public void chooseColorPicker() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String initColor = getColor();
+        System.out.println("The initial color is " + initColor);
+
+        String script = String.format("arguments[0].setAttribute('value', '%s');", GREEN.asHex());
+        js.executeScript(script, colorPicker);
+        String finalColor = getColor();
+        System.out.println("The initial color is " + finalColor);
+    }
+
+    public String getColor() {
+        return colorPicker.getAttribute(VALUE_NAME);
+    }
 
     public WebElement getDatePicker() {
         return dateBox;
     }
 
     @Step("Check date picker")
-    public void chooseDatePicker() {
+    public void chooseDatePicker(String date) {
         dateBox.click();
-        dateBox.sendKeys("04/14/2025");
+        dateBox.sendKeys(date);
     }
 
     public WebElement getRangeElement() {
