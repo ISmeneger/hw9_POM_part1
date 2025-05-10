@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 public class MultilanguagePage extends BasePage {
     private static final String MULTILANGUAGE_FORM_URL = "multilanguage.html";
-    public static final String MULTILANGUAGE_FORM_TITLE = "Multilanguage page";
+    public static final String MULTILANGUAGE_FORM_TITLE = "";
 
     public MultilanguagePage(WebDriver driver) {
         super(driver);
