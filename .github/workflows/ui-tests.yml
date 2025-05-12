@@ -46,7 +46,7 @@ jobs:
       env:
         SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
         PASSWORD_INPUT: ${{ secrets.PASSWORD }}
-      run: ./gradlew clean test -Denv="test" -Dpassword=$PASSWORD
+      run: ./gradlew test
 
 
     - name: Copy History
