@@ -2,6 +2,7 @@ package ui;
 
 import Ilya_S.pageObjects.HomePage;
 import Ilya_S.pageObjects.chapter_5.MultilanguagePage;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class MultilanguageTests extends BaseTest {
 
     @Test
+    @DisplayName("Check Multilanguage page")
     void openMultilanguageTest() {
         HomePage homePage = new HomePage(driver);
         MultilanguagePage multilanguagePage = homePage.openMultilanguagePage();

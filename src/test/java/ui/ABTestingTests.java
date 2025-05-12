@@ -2,6 +2,7 @@ package ui;
 
 import Ilya_S.pageObjects.HomePage;
 import Ilya_S.pageObjects.chapter_9.ABTestingPage;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ABTestingTests extends BaseTest {
 
     @Test
+    @DisplayName("Check A/B Testing page")
     void openABTestingTest() {
         HomePage homePage = new HomePage(driver);
         ABTestingPage abTestingPage = homePage.openABTestingPage();
