@@ -6,6 +6,7 @@ import Ilya_S.pageObjects.chapter_3.WebFormPage;
 import configs.TestPropertiesConfig;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -37,6 +38,7 @@ public class WebFormTests extends BaseTest {
 
 
     @Test
+    @DisplayName("Check WebForm page")
     void openWebFormTest() {
         String currentUrl = webFormPage.getCurrentUrl();
         WebElement title = webFormPage.getTitle();
@@ -47,11 +49,13 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check WebForm page")
     void openWebFormTestWithCheck() {
         webFormPage.checkIsWebPage();
     }
 
     @Test
+    @DisplayName("Check user field")
     void textInputTest() {
         webFormPage.inputValue("user");
 
@@ -59,6 +63,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check clear user field")
     void textInputClearTest() {
         webFormPage.inputValue("user");
         webFormPage.clearTextValue();
@@ -68,6 +73,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check password field")
     void passwordInputTest() {
         webFormPage.inputPassword(config.getPassword());
 
@@ -76,6 +82,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check clear password field")
     void passwordClearTest() {
         webFormPage.inputPassword(config.getPassword());
         webFormPage.clearPasswordValue();
@@ -85,6 +92,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check textarea field")
     void textAreaFieldTest() {
         webFormPage.inputTextareaValue(BIG_TEXT);
 
@@ -92,6 +100,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check clear textarea field")
     void textAreaFieldClearTest() {
         webFormPage.inputTextareaValue(BIG_TEXT);
         webFormPage.clearTextareaValue();
@@ -101,6 +110,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check Disabled input field")
     void disabledInputFieldTest() {
         assertFalse(webFormPage.disabledInput().isEnabled());
 
@@ -110,6 +120,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check Readonly input field")
     void readonlyInputFieldTest() {
         assertTrue(webFormPage.readonlyInput().isEnabled());
 
@@ -118,19 +129,19 @@ public class WebFormTests extends BaseTest {
         assertEquals(READONLY_INPUT_FIELD, webFormPage.getReadonlyInputField());
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Check Dropdown (select) menu by visible text")
     @ValueSource(strings = {"One", "Two", "Three"})
     public void dropdownSelectByVisibleTextTest(String option) {
         webFormPage.dropdownSelectorByVisibleText(option);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Check Dropdown (select) menu by value")
     @ValueSource(strings = {"1", "2", "3"})
     public void dropdownSelectByValueTest(String value) {
         webFormPage.dropdownSelectorByValue(value);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Check Dropdown (datalist) menu")
     @ValueSource(strings = {"San Francisco", "New York", "Seattle", "Los Angeles", "Chicago"})
     void dropdownDataListTest(String city) {
         webFormPage.dropDownDataListMenu(city);
@@ -139,6 +150,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check File input field")
     void fileInputTest() {
         webFormPage.downloadFile();
         webFormPage.submitForm();
@@ -147,6 +159,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check checked Checkbox")
     void checkedCheckboxTest() {
         assertTrue(webFormPage.getCheckedCheckbox().isSelected());
 
@@ -156,6 +169,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check default Checkbox")
     void defaultCheckboxTest() {
         assertFalse(webFormPage.getDefaultCheckbox().isSelected());
 
@@ -165,6 +179,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check radio buttons")
     void radioButtonsTest() {
         assertTrue(webFormPage.getCheckedRadio().isSelected());
         assertFalse(webFormPage.getDefaultRadio().isSelected());
@@ -176,6 +191,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check Color picker")
     void colorPickerTest() {
         String initColor = webFormPage.getColor();
         webFormPage.chooseColorPicker();
@@ -186,6 +202,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check Date picker")
     void datePickerTest() {
         webFormPage.chooseDatePicker("04/14/2025");
 
@@ -193,6 +210,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check Example range")
     void actionAPIMouseExampleRangeTest() {
         webFormPage.moveSliderRight();
 
@@ -200,6 +218,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Check submit button and form submitted")
     void submitFormTest() {
         webFormPage.submitForm();
 
