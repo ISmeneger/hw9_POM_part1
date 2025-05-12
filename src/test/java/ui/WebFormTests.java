@@ -38,7 +38,7 @@ public class WebFormTests extends BaseTest {
 
 
     @Test
-    @DisplayName("Check WebForm page")
+    @DisplayName("Check Web form page")
     void openWebFormTest() {
         String currentUrl = webFormPage.getCurrentUrl();
         WebElement title = webFormPage.getTitle();
@@ -49,7 +49,7 @@ public class WebFormTests extends BaseTest {
     }
 
     @Test
-    @DisplayName("Check WebForm page")
+    @DisplayName("Check Web form page")
     void openWebFormTestWithCheck() {
         webFormPage.checkIsWebPage();
     }

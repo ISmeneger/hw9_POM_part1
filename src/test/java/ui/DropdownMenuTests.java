@@ -2,6 +2,7 @@ package ui;
 
 import Ilya_S.pageObjects.chapter_3.DropdownMenuPage;
 import Ilya_S.pageObjects.HomePage;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DropdownMenuTests extends BaseTest {
 
     @Test
+    @DisplayName("Check Dropdown menu page")
     void openDropdownMenuTest() {
         HomePage homePage = new HomePage(driver);
         DropdownMenuPage dropdownMenuPage = homePage.openDropdownMenuPage();

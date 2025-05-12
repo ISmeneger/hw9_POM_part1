@@ -2,6 +2,7 @@ package ui;
 
 import Ilya_S.pageObjects.HomePage;
 import Ilya_S.pageObjects.chapter_4.LongPage;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class LongPageTests extends BaseTest {
 
     @Test
+    @DisplayName("Check Long page")
     void openLongPageTest() {
         HomePage homePage = new HomePage(driver);
         LongPage longPage = homePage.openLongPage();

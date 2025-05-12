@@ -2,6 +2,7 @@ package ui;
 
 import Ilya_S.pageObjects.chapter_3.DragAndDropPage;
 import Ilya_S.pageObjects.HomePage;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DragAndDropTests extends BaseTest {
 
     @Test
+    @DisplayName("Check Drag and Drop page")
     void openDragAndDropTest() {
         HomePage homePage = new HomePage(driver);
         DragAndDropPage dragAndDropPage = homePage.openDragAndDropPage();

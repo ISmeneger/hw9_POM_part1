@@ -2,6 +2,7 @@ package ui;
 
 import Ilya_S.pageObjects.HomePage;
 import Ilya_S.pageObjects.chapter_3.LoadingImagesPage;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class LoadingImagesTests extends BaseTest {
 
     @Test
+    @DisplayName("Check Loading images page")
     void openLoadingImagesTest() {
         HomePage homePage = new HomePage(driver);
         LoadingImagesPage loadingImagesPage  = homePage.openLoadingImagesPage() ;

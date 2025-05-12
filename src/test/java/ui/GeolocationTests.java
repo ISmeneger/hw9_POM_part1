@@ -2,6 +2,7 @@ package ui;
 
 import Ilya_S.pageObjects.HomePage;
 import Ilya_S.pageObjects.chapter_5.GeolocationPage;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class GeolocationTests extends BaseTest {
 
     @Test
+    @DisplayName("Check Geolocation page")
     void openGeolocationTest() {
         HomePage homePage = new HomePage(driver);
         GeolocationPage geolocationPage = homePage.openGeolocationPage();
